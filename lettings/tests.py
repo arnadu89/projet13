@@ -1,5 +1,4 @@
 import pytest
-from pytest_mock import mocker
 from django.test import Client
 from django.urls import reverse
 
