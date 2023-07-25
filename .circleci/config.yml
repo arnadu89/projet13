@@ -12,14 +12,6 @@ jobs:
           name: Build docker image
           command: docker build -t oc_projet13:$CIRCLE_SHA1 .
 
-  push_to_docker_hub:
-    docker:
-      - image: docker:stable
-
-    steps:
-      - checkout
-      - setup_remote_docker:
-            version: 20.10.14
       - run:
           name: Log in DockerHub
           command: |
@@ -47,9 +39,6 @@ workflows:
           filters:
             branches:
               only: master
-      - push_to_docker_hub:
-          requires:
-            - build
       - test:
           requires:
-            - push_to_docker_hub
+            - build
