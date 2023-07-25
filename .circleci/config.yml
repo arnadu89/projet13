@@ -7,6 +7,8 @@ jobs:
       - image: docker:stable
     steps:
       - checkout
+      - setup_remote_docker:
+            version: 20.10.14
       - run:
           name: Build docker image
           command: docker build -t oc_projet13:$CIRCLE_SHA1 .
