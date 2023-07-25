@@ -2,7 +2,6 @@ version: 2
 
 jobs:
   build:
-    working_directory: /app
     docker:
       - image: docker:stable
     steps:
@@ -32,7 +31,6 @@ jobs:
   test:
     docker:
       - image: oc_projet13:$CIRCLE_SHA1
-    working_directory: /projet13
     steps:
       - checkout
       - run:
