@@ -4,25 +4,50 @@ jobs:
   build:
     working_directory: /app
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: docker:stable
     steps:
       - checkout
-      - setup_remote_docker
       - run:
-          name: install
+          name: Build docker image
+          command: docker build -t oc_projet13:$CIRCLE_SHA1
 
+  push_container:
+    docker:
+      - image: docker:stable
 
+    steps:
+      - checkout
+      - run:
+          name: Log in DockerHub
+          command: |
+            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+
+      - run:
+          name: Push container to DockerHub
+          command: |
+            docker tag oc_projet13:$CIRCLE_SHA1 $DOCKERHUB_USERNAME/oc_projet13:$CIRCLE_SHA1
+            docker push $DOCKERHUB_USERNAME/oc_projet13:$CIRCLE_SHA1
   test:
     docker:
-      - image: arnadu/test_django_p13_push:latest
+      - image: oc_projet13:$CIRCLE_SHA1
     working_directory: /projet13
     steps:
       - checkout
-#      - run: pip install -r requirements.txt
-      - run: pytest
+      - run:
+          name: Run tests
+          command: pytest
 
 workflows:
   version: 2
-  test_the_application:
+  build_test_push:
     jobs:
-      - test
+      - build
+      - test:
+          requires:
+            - build
+      - push_container:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
