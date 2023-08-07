@@ -42,4 +42,3 @@ def test_profile_view():
 
     assert response.status_code == 200
     assert title in content
-
