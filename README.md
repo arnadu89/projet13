@@ -75,3 +75,13 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 - Pour activer l'environnement virtuel, `.\venv\Scripts\Activate.ps1` 
 - Remplacer `which <my-command>` par `(Get-Command <my-command>).Path`
+
+### Pipeline CI/CD
+
+La mise à jour d'une branche quelconque du projet déclenche le pipeline d'intégration qui se compose d'une phase de compilation et d'une phase de test.
+La mise à jour de la branche *master* déclenche également d'une part une sauvegarde de l'image docker du projet sur dockerhub ainsi qu'un déploiement sur le site heroku disponible sur : https://ocprojet13-e933f32dbe1e.herokuapp.com/
+
+### Récupération de l'imahe docker du projet depuis dockerhub
+
+Il est possible de récupèrer l'image de la branche master du projet depuis dockerhub en spécifiant le hash du commit : 
+```docker pull arnadu/oc_projet13:{commit_hash}```
