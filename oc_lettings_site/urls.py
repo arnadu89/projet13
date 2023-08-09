@@ -5,7 +5,7 @@ from . import views
 
 
 def trigger_error(request):
-    return 1/0
+    return 1 / 0
 
 
 urlpatterns = [
