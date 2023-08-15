@@ -4,7 +4,7 @@ from django.urls import reverse
 
 
 def test_dummy():
-    assert 1
+    assert 2
 
 
 @pytest.mark.django_db
