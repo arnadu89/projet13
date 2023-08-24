@@ -4,6 +4,7 @@ from django.urls import reverse
 
 
 def test_dummy():
+    """this is a dummy test"""
     assert 1
 
 
